@@ -5,7 +5,7 @@ import 'src/app.dart';
 
 Future<void> main() async {
 await GetStorage.init();
-
+await GetStorage.init('cart');
 
 
   runApp(const MyApp());

@@ -10,13 +10,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final storage = GetStorage();
+  final productCart = GetStorage('cart');
 
   late final VoidCallback listen;
 
   @override
   void initState() {
-    storage.listen(() {
-      debugPrint('O Storage foi alterado!!!');
+    /*    storage.listen(() {
+       debugPrint('O Storage foi alterado!!!');
+    }); */
+
+    storage.listenKey('nameKey', (value) {
+      debugPrint('O nameKey foi alterado!!!');
     });
 
     super.initState();
@@ -28,11 +33,10 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    var name = GetStorage().read('nameKey') ?? 'Sem Nome';
-
+    var name = storage.read('nameKey') ?? 'Sem Nome';
+    var nameProduct = productCart.read('nameKey') ?? 'Sem Nome';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
@@ -47,11 +51,39 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                GetStorage().write('nameKey', 'João Batista');
+                storage.write('nameKey', 'João Batista');
                 setState(() {});
               },
-              child: const Text('Adicionar Nome'),
+              child: const Text('Adicionar Nome storage'),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                storage.remove('nameKey');
+                setState(() {});
+              },
+              child: const Text('Remover Nome storage'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Nome Produto: $nameProduct',
+            ),
+            ElevatedButton(
+              onPressed: () {
+                productCart.write('nameKey', 'Teclado Digital');
+                setState(() {});
+              },
+              child: const Text('Adicionar Nome Produto'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                productCart.remove('nameKey');
+                setState(() {});
+              },
+              child: const Text('Remover Nome produto'),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
