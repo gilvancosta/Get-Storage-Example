@@ -9,6 +9,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final storage = GetStorage();
+
+  late final VoidCallback listen;
+
+  @override
+  void initState() {
+    storage.listen(() {
+      debugPrint('O Storage foi alterado!!!');
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    listen();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var name = GetStorage().read('nameKey') ?? 'Sem Nome';
