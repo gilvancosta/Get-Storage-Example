@@ -84,6 +84,12 @@ class _HomePageState extends State<HomePage> {
               child: const Text('Remover Nome produto'),
             ),
             const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/storage');
+              },
+              child: const Text('Ir para a página Storage'),
+            ),
           ],
         ),
       ),
